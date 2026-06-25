@@ -16,29 +16,26 @@
 </section>
 
 <section class="metrics-grid">
-    <article class="metric-card main-card">
-        <span>Cliente</span>
-        <h2>@Account.CustomerName</h2>
-        <p>@Account.AccountNumber</p>
-    </article>
+    <MetricCard
+        Label="Cliente"
+        Value="@Account.CustomerName"
+        Description="@Account.AccountNumber"
+        IsMain="true" />
 
-    <article class="metric-card">
-        <span>Saldo disponible</span>
-        <h2>@Account.AvailableBalance.ToString("N2") @Account.Currency</h2>
-        <p>Balance simulado</p>
-    </article>
+    <MetricCard
+        Label="Saldo disponible"
+        Value="@($"{Account.AvailableBalance:N2} {Account.Currency}")"
+        Description="Balance simulado" />
 
-    <article class="metric-card">
-        <span>Transferencias</span>
-        <h2>@Account.PendingTransfers</h2>
-        <p>Pendientes de revisión</p>
-    </article>
+    <MetricCard
+        Label="Transferencias"
+        Value="@Account.PendingTransfers.ToString()"
+        Description="Pendientes de revisión" />
 
-    <article class="metric-card">
-        <span>Riesgo</span>
-        <h2>@Account.RiskLevel</h2>
-        <p>Nivel operativo</p>
-    </article>
+    <MetricCard
+        Label="Riesgo"
+        Value="@Account.RiskLevel"
+        Description="Nivel operativo" />
 </section>
 
 <section class="movements-section">

@@ -1,0 +1,19 @@
+<article class="metric-card @(IsMain ? "main-card" : "")">
+    <span>@Label</span>
+    <h2>@Value</h2>
+    <p>@Description</p>
+</article>
+
+@code {
+    [Parameter]
+    public string Label { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Value { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Description { get; set; } = string.Empty;
+
+    [Parameter]
+    public bool IsMain { get; set; }
+}
