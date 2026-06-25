@@ -81,4 +81,16 @@ public class DashboardService
             }
         };
     }
+
+    public BankAccount? GetAccountByNumber(string accountNumber)
+    {
+        return GetAccounts()
+            .FirstOrDefault(account =>
+                account.AccountNumber.Equals(
+                    accountNumber.Trim(),
+                    StringComparison.OrdinalIgnoreCase
+                )
+            );
+    }
+
 }

@@ -1,0 +1,21 @@
+@using FincoreBlazorClient.Models
+
+<article class="account-row">
+    <div>
+        <span class="account-status @Account.Status.ToLower()">@Account.Status</span>
+        <h2>@Account.Alias</h2>
+        <p>@Account.AccountNumber · @Account.ProductType</p>
+    </div>
+
+    <div class="account-actions">
+        <strong>@Account.Balance.ToString("N2") @Account.Currency</strong>
+        <a class="secondary-button" href="/accounts/@Account.AccountNumber">
+            Ver detalle
+        </a>
+    </div>
+</article>
+
+@code {
+    [Parameter]
+    public BankAccount Account { get; set; } = new();
+}

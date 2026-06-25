@@ -1,6 +1,7 @@
 @page "/accounts"
 @using FincoreBlazorClient.Models
 @using FincoreBlazorClient.Services
+@using FincoreBlazorClient.Components.Shared
 @inject DashboardService DashboardService
 
 <PageTitle>Cuentas</PageTitle>
@@ -14,15 +15,7 @@
 <section class="accounts-list">
     @foreach (var account in AccountList)
     {
-        <article class="account-row">
-            <div>
-                <span class="account-status @account.Status.ToLower()">@account.Status</span>
-                <h2>@account.Alias</h2>
-                <p>@account.AccountNumber · @account.ProductType</p>
-            </div>
-
-            <strong>@account.Balance.ToString("N2") @account.Currency</strong>
-        </article>
+        <AccountCard Account="account" />
     }
 </section>
 

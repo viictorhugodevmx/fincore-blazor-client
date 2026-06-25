@@ -1,0 +1,58 @@
+@page "/accounts/{AccountNumber}"
+@using FincoreBlazorClient.Models
+@using FincoreBlazorClient.Services
+@inject DashboardService DashboardService
+
+<PageTitle>Detalle de cuenta</PageTitle>
+
+@if (Account is null)
+{
+    <section class="empty-state">
+        <span class="eyebrow dark">Cuenta no encontrada</span>
+        <h1>No encontramos esa cuenta</h1>
+        <p>Verifica el número de cuenta e inténtalo nuevamente.</p>
+        <a class="primary-link" href="/accounts">Volver a cuentas</a>
+    </section>
+}
+else
+{
+    <section class="page-heading">
+        <span class="eyebrow dark">Detalle de cuenta</span>
+        <h1>@Account.Alias</h1>
+        <p>@Account.AccountNumber · @Account.ProductType</p>
+    </section>
+
+    <section class="account-detail-grid">
+        <MetricCard
+            Label="Saldo"
+            Value="@($"{Account.Balance:N2} {Account.Currency}")"
+            Description="Saldo disponible actual"
+            IsMain="true" />
+
+        <MetricCard
+            Label="Estatus"
+            Value="@Account.Status"
+            Description="Estado operativo de la cuenta" />
+
+        <MetricCard
+            Label="Producto"
+            Value="@Account.ProductType"
+            Description="Tipo de producto bancario" />
+    </section>
+
+    <div class="actions-row">
+        <a class="primary-link" href="/accounts">Volver a cuentas</a>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string AccountNumber { get; set; } = string.Empty;
+
+    private BankAccount? Account { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        Account = DashboardService.GetAccountByNumber(AccountNumber);
+    }
+}
