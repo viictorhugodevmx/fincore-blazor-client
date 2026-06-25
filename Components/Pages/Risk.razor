@@ -1,0 +1,29 @@
+@page "/risk"
+@using FincoreBlazorClient.Models
+@using FincoreBlazorClient.Services
+@using FincoreBlazorClient.Components.Shared
+@inject DashboardService DashboardService
+
+<PageTitle>Alertas de riesgo</PageTitle>
+
+<section class="page-heading">
+    <span class="eyebrow dark">Riesgo</span>
+    <h1>Alertas de riesgo</h1>
+    <p>Listado simulado de alertas para practicar render condicional y clases dinámicas en Blazor.</p>
+</section>
+
+<section class="risk-list">
+    @foreach (var alert in AlertList)
+    {
+        <RiskAlertCard Alert="alert" />
+    }
+</section>
+
+@code {
+    private List<RiskAlert> AlertList { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        AlertList = DashboardService.GetRiskAlerts();
+    }
+}

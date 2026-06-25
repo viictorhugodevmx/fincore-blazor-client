@@ -1,0 +1,20 @@
+@using FincoreBlazorClient.Models
+
+<article class="risk-card @Alert.Severity.ToLower()">
+    <div>
+        <span class="risk-severity @Alert.Severity.ToLower()">@Alert.Severity</span>
+        <h2>@Alert.Title</h2>
+        <p>@Alert.Detail</p>
+    </div>
+
+    <div class="risk-meta">
+        <strong>@Alert.AlertId</strong>
+        <span>@Alert.AccountNumber</span>
+        <small>@Alert.CreatedAtUtc.ToString("dd MMM yyyy HH:mm") UTC</small>
+    </div>
+</article>
+
+@code {
+    [Parameter]
+    public RiskAlert Alert { get; set; } = new();
+}
