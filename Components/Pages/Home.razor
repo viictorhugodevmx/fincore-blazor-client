@@ -1,6 +1,7 @@
 @page "/"
 @using FincoreBlazorClient.Models
 @using FincoreBlazorClient.Services
+@using FincoreBlazorClient.Components.Shared
 @inject DashboardService DashboardService
 
 <PageTitle>FinCore Blazor Client</PageTitle>
@@ -47,15 +48,7 @@
     <div class="movement-list">
         @foreach (var movement in RecentMovements)
         {
-            <article class="movement-row">
-                <div>
-                    <span class="movement-type">@movement.Type</span>
-                    <h3>@movement.Description</h3>
-                    <p>@movement.CreatedAtUtc.ToString("dd MMM yyyy HH:mm") UTC</p>
-                </div>
-
-                <strong>@movement.Amount.ToString("N2") @movement.Currency</strong>
-            </article>
+            <MovementRow Movement="movement" />
         }
     </div>
 </section>

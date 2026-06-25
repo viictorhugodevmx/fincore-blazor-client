@@ -1,0 +1,16 @@
+@using FincoreBlazorClient.Models
+
+<article class="movement-row">
+    <div>
+        <span class="movement-type">@Movement.Type</span>
+        <h3>@Movement.Description</h3>
+        <p>@Movement.CreatedAtUtc.ToString("dd MMM yyyy HH:mm") UTC</p>
+    </div>
+
+    <strong>@Movement.Amount.ToString("N2") @Movement.Currency</strong>
+</article>
+
+@code {
+    [Parameter]
+    public RecentMovement Movement { get; set; } = new();
+}
