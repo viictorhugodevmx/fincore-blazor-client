@@ -179,3 +179,83 @@ a {
         flex-direction: column;
     }
 }
+
+.page-heading {
+    margin: 24px 0;
+    padding: 32px;
+    border-radius: 24px;
+    background: white;
+    border: 1px solid #e5eaf3;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+}
+
+.page-heading h1 {
+    margin: 8px 0;
+    color: #101828;
+    font-size: 40px;
+    font-weight: 800;
+}
+
+.page-heading p {
+    margin: 0;
+    color: #667085;
+}
+
+.accounts-list {
+    display: grid;
+    gap: 16px;
+}
+
+.account-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 22px;
+    border-radius: 20px;
+    background: white;
+    border: 1px solid #e5eaf3;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+}
+
+.account-row h2 {
+    margin: 8px 0;
+    color: #101828;
+    font-size: 22px;
+}
+
+.account-row p {
+    margin: 0;
+    color: #667085;
+}
+
+.account-row strong {
+    color: #101828;
+    font-size: 20px;
+    white-space: nowrap;
+}
+
+.account-status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.account-status.active {
+    color: #027a48;
+    background: #ecfdf3;
+}
+
+.account-status.blocked {
+    color: #b42318;
+    background: #fef3f2;
+}
+
+@media (max-width: 768px) {
+    .account-row {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

@@ -47,4 +47,38 @@ public class DashboardService
             }
         };
     }
+
+    public List<BankAccount> GetAccounts()
+    {
+        return new List<BankAccount>
+        {
+            new BankAccount
+            {
+                AccountNumber = "ACC-1001",
+                Alias = "Cuenta principal",
+                Balance = 24750.80m,
+                Currency = "MXN",
+                Status = "Active",
+                ProductType = "Digital checking"
+            },
+            new BankAccount
+            {
+                AccountNumber = "ACC-2001",
+                Alias = "Ahorro fintech",
+                Balance = 18300.50m,
+                Currency = "MXN",
+                Status = "Active",
+                ProductType = "Savings"
+            },
+            new BankAccount
+            {
+                AccountNumber = "ACC-3001",
+                Alias = "Cuenta bloqueada demo",
+                Balance = 0,
+                Currency = "MXN",
+                Status = "Blocked",
+                ProductType = "Risk review"
+            }
+        };
+    }
 }
