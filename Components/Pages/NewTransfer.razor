@@ -1,0 +1,108 @@
+@page "/transfers/new"
+@rendermode InteractiveServer
+@using Microsoft.AspNetCore.Components.Forms
+@using FincoreBlazorClient.Models
+@using FincoreBlazorClient.Services
+@inject DashboardService DashboardService
+
+<PageTitle>Nueva transferencia</PageTitle>
+
+<section class="page-heading">
+    <span class="eyebrow dark">Operación bancaria</span>
+    <h1>Nueva transferencia</h1>
+    <p>Formulario Blazor con validación y binding de datos.</p>
+</section>
+
+<section class="form-shell">
+    @if (!string.IsNullOrWhiteSpace(ResultMessage))
+    {
+        <div class="form-alert @(WasSubmitted ? "success" : "error")">
+            @ResultMessage
+        </div>
+    }
+
+    <EditForm
+        Model="Transfer"
+        FormName="new-transfer-form"
+        OnValidSubmit="HandleValidSubmit"
+        OnInvalidSubmit="HandleInvalidSubmit"
+        class="transfer-form">
+        
+        <DataAnnotationsValidator />
+
+        <div class="form-field">
+            <label>Cuenta origen</label>
+            <InputSelect @bind-Value="Transfer.SourceAccountNumber">
+                <option value="">Selecciona una cuenta</option>
+                @foreach (var account in AccountList)
+                {
+                    <option value="@account.AccountNumber">
+                        @account.Alias - @account.AccountNumber
+                    </option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => Transfer.SourceAccountNumber)" />
+        </div>
+
+        <div class="form-field">
+            <label>Cuenta destino</label>
+            <InputText @bind-Value="Transfer.TargetAccountNumber" placeholder="Ej. ACC-2001" />
+            <ValidationMessage For="@(() => Transfer.TargetAccountNumber)" />
+        </div>
+
+        <div class="form-field">
+            <label>Monto</label>
+            <InputNumber @bind-Value="Transfer.Amount" placeholder="0.00" />
+            @if (ShowAmountError)
+            {
+                <div class="validation-message">El monto debe ser mayor a cero.</div>
+            }
+        </div>
+
+        <div class="form-field">
+            <label>Descripción</label>
+            <InputText @bind-Value="Transfer.Description" placeholder="Concepto de la transferencia" />
+            <ValidationMessage For="@(() => Transfer.Description)" />
+        </div>
+
+        <button type="submit" class="primary-button">
+            Registrar transferencia
+        </button>
+    </EditForm>
+</section>
+
+@code {
+    private TransferRequest Transfer { get; set; } = new();
+    private List<BankAccount> AccountList { get; set; } = new();
+    private bool WasSubmitted { get; set; }
+    private bool ShowAmountError { get; set; }
+    private string ResultMessage { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        AccountList = DashboardService.GetAccounts();
+    }
+
+    private void HandleValidSubmit()
+    {
+        ShowAmountError = false;
+        WasSubmitted = false;
+
+        if (Transfer.Amount is null || Transfer.Amount <= 0)
+        {
+            ShowAmountError = true;
+            ResultMessage = "Revisa los datos del formulario.";
+            return;
+        }
+
+        WasSubmitted = true;
+        ResultMessage = "Transferencia simulada registrada correctamente.";
+    }
+
+    private void HandleInvalidSubmit()
+    {
+        ShowAmountError = false;
+        WasSubmitted = false;
+        ResultMessage = "Revisa los datos del formulario.";
+    }
+}
