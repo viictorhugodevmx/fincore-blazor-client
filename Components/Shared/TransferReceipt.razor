@@ -1,0 +1,38 @@
+@using FincoreBlazorClient.Models
+
+<article class="transfer-result">
+    <span class="eyebrow dark">Comprobante</span>
+    <h2>@Result.ReferenceNumber</h2>
+
+    <div class="transfer-result-grid">
+        <div>
+            <span>Origen</span>
+            <strong>@Result.SourceAccountNumber</strong>
+        </div>
+
+        <div>
+            <span>Destino</span>
+            <strong>@Result.TargetAccountNumber</strong>
+        </div>
+
+        <div>
+            <span>Monto</span>
+            <strong>@Result.Amount.ToString("N2") @Result.Currency</strong>
+        </div>
+
+        <div>
+            <span>Fecha UTC</span>
+            <strong>@Result.CreatedAtUtc.ToString("dd MMM yyyy HH:mm")</strong>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Result.Description))
+    {
+        <p>@Result.Description</p>
+    }
+</article>
+
+@code {
+    [Parameter]
+    public TransferResult Result { get; set; } = new();
+}

@@ -3,6 +3,7 @@
 @using Microsoft.AspNetCore.Components.Forms
 @using FincoreBlazorClient.Models
 @using FincoreBlazorClient.Services
+@using FincoreBlazorClient.Components.Shared
 @inject DashboardService DashboardService
 
 <PageTitle>Nueva transferencia</PageTitle>
@@ -10,7 +11,7 @@
 <section class="page-heading">
     <span class="eyebrow dark">Operación bancaria</span>
     <h1>Nueva transferencia</h1>
-    <p>Formulario Blazor con validación y binding de datos.</p>
+    <p>Formulario Blazor con validación, binding de datos y comprobante visual.</p>
 </section>
 
 <section class="form-shell">
@@ -21,13 +22,18 @@
         </div>
     }
 
+    @if (Result is not null)
+    {
+        <TransferReceipt Result="Result" />
+    }
+
     <EditForm
         Model="Transfer"
         FormName="new-transfer-form"
         OnValidSubmit="HandleValidSubmit"
         OnInvalidSubmit="HandleInvalidSubmit"
         class="transfer-form">
-        
+
         <DataAnnotationsValidator />
 
         <div class="form-field">
@@ -74,6 +80,7 @@
 @code {
     private TransferRequest Transfer { get; set; } = new();
     private List<BankAccount> AccountList { get; set; } = new();
+    private TransferResult? Result { get; set; }
     private bool WasSubmitted { get; set; }
     private bool ShowAmountError { get; set; }
     private string ResultMessage { get; set; } = string.Empty;
@@ -87,6 +94,7 @@
     {
         ShowAmountError = false;
         WasSubmitted = false;
+        Result = null;
 
         if (Transfer.Amount is null || Transfer.Amount <= 0)
         {
@@ -95,6 +103,7 @@
             return;
         }
 
+        Result = DashboardService.CreateTransferResult(Transfer);
         WasSubmitted = true;
         ResultMessage = "Transferencia simulada registrada correctamente.";
     }
@@ -103,6 +112,7 @@
     {
         ShowAmountError = false;
         WasSubmitted = false;
+        Result = null;
         ResultMessage = "Revisa los datos del formulario.";
     }
 }

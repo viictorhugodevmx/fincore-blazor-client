@@ -93,4 +93,54 @@ public class DashboardService
             );
     }
 
+    public TransferResult CreateTransferResult(TransferRequest request)
+    {
+        return new TransferResult
+        {
+            ReferenceNumber = $"TRX-{DateTime.UtcNow:yyyyMMddHHmmss}",
+            SourceAccountNumber = request.SourceAccountNumber,
+            TargetAccountNumber = request.TargetAccountNumber.Trim().ToUpper(),
+            Amount = request.Amount ?? 0,
+            Currency = "MXN",
+            Description = request.Description?.Trim() ?? string.Empty,
+            CreatedAtUtc = DateTime.UtcNow
+        };
+    }
+
+    public List<TransferHistoryItem> GetTransferHistory()
+    {
+        return new List<TransferHistoryItem>
+        {
+            new TransferHistoryItem
+            {
+                ReferenceNumber = "TRX-202606240001",
+                SourceAccountNumber = "ACC-1001",
+                TargetAccountNumber = "ACC-2001",
+                Amount = 500.00m,
+                Currency = "MXN",
+                Status = "Completed",
+                CreatedAtUtc = DateTime.UtcNow.AddHours(-2)
+            },
+            new TransferHistoryItem
+            {
+                ReferenceNumber = "TRX-202606230002",
+                SourceAccountNumber = "ACC-1001",
+                TargetAccountNumber = "ACC-9001",
+                Amount = 1200.50m,
+                Currency = "MXN",
+                Status = "Pending",
+                CreatedAtUtc = DateTime.UtcNow.AddDays(-1)
+            },
+            new TransferHistoryItem
+            {
+                ReferenceNumber = "TRX-202606220003",
+                SourceAccountNumber = "ACC-2001",
+                TargetAccountNumber = "ACC-1001",
+                Amount = 300.00m,
+                Currency = "MXN",
+                Status = "Rejected",
+                CreatedAtUtc = DateTime.UtcNow.AddDays(-2)
+            }
+        };
+    }
 }
