@@ -42,6 +42,5 @@ dotnet run
 Modo watch:
 
 dotnet watch run
-Cierre
-fincore-blazor-client · Paso 0 listo
+
 

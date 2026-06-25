@@ -1,7 +1,51 @@
-﻿@page "/"
+@page "/"
+@using FincoreBlazorClient.Models
+@using FincoreBlazorClient.Services
+@inject DashboardService DashboardService
 
-<PageTitle>Home</PageTitle>
+<PageTitle>FinCore Blazor Client</PageTitle>
 
-<h1>Hello, world!</h1>
+<section class="hero">
+    <div>
+        <span class="eyebrow">FinCore Blazor Client</span>
+        <h1>Dashboard financiero</h1>
+        <p>
+            Frontend Blazor para practicar componentes, estado y UI fintech usando C#.
+        </p>
+    </div>
+</section>
 
-Welcome to your new app.
+<section class="metrics-grid">
+    <article class="metric-card main-card">
+        <span>Cliente</span>
+        <h2>@Account.CustomerName</h2>
+        <p>@Account.AccountNumber</p>
+    </article>
+
+    <article class="metric-card">
+        <span>Saldo disponible</span>
+        <h2>@Account.AvailableBalance.ToString("N2") @Account.Currency</h2>
+        <p>Balance simulado</p>
+    </article>
+
+    <article class="metric-card">
+        <span>Transferencias</span>
+        <h2>@Account.PendingTransfers</h2>
+        <p>Pendientes de revisión</p>
+    </article>
+
+    <article class="metric-card">
+        <span>Riesgo</span>
+        <h2>@Account.RiskLevel</h2>
+        <p>Nivel operativo</p>
+    </article>
+</section>
+
+@code {
+    private DashboardAccount Account { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        Account = DashboardService.GetDashboardAccount();
+    }
+}
