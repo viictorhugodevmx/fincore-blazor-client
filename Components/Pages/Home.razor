@@ -41,11 +41,35 @@
     </article>
 </section>
 
+<section class="movements-section">
+    <div class="section-heading">
+        <span class="eyebrow dark">Actividad reciente</span>
+        <h2>Últimos movimientos</h2>
+    </div>
+
+    <div class="movement-list">
+        @foreach (var movement in RecentMovements)
+        {
+            <article class="movement-row">
+                <div>
+                    <span class="movement-type">@movement.Type</span>
+                    <h3>@movement.Description</h3>
+                    <p>@movement.CreatedAtUtc.ToString("dd MMM yyyy HH:mm") UTC</p>
+                </div>
+
+                <strong>@movement.Amount.ToString("N2") @movement.Currency</strong>
+            </article>
+        }
+    </div>
+</section>
+
 @code {
     private DashboardAccount Account { get; set; } = new();
+    private List<RecentMovement> RecentMovements { get; set; } = new();
 
     protected override void OnInitialized()
     {
         Account = DashboardService.GetDashboardAccount();
+        RecentMovements = DashboardService.GetRecentMovements();
     }
 }
