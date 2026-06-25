@@ -1,0 +1,33 @@
+<section class="empty-state reusable-empty-state">
+    @if (!string.IsNullOrWhiteSpace(Eyebrow))
+    {
+        <span class="eyebrow dark">@Eyebrow</span>
+    }
+
+    <h1>@Title</h1>
+    <p>@Message</p>
+
+    @if (!string.IsNullOrWhiteSpace(ActionText))
+    {
+        <button type="button" class="primary-button empty-action" @onclick="OnActionClick">
+            @ActionText
+        </button>
+    }
+</section>
+
+@code {
+    [Parameter]
+    public string Eyebrow { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Message { get; set; } = string.Empty;
+
+    [Parameter]
+    public string ActionText { get; set; } = string.Empty;
+
+    [Parameter]
+    public EventCallback OnActionClick { get; set; }
+}

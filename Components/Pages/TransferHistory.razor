@@ -1,6 +1,8 @@
 @page "/transfers/history"
+@rendermode InteractiveServer
 @using FincoreBlazorClient.Models
 @using FincoreBlazorClient.Services
+@using FincoreBlazorClient.Components.Shared
 @inject DashboardService DashboardService
 
 <PageTitle>Historial de transferencias</PageTitle>
@@ -8,39 +10,94 @@
 <section class="page-heading">
     <span class="eyebrow dark">Operaciones</span>
     <h1>Historial de transferencias</h1>
-    <p>Consulta simulada de operaciones para practicar tablas y listados en Blazor.</p>
+    <p>Consulta simulada de operaciones con filtro por estatus en Blazor.</p>
+</section>
+
+<section class="filter-card">
+    <span>Filtrar por estatus</span>
+
+    <div class="filter-actions">
+        @foreach (var status in StatusOptions)
+        {
+            <button
+                type="button"
+                class="filter-pill @(SelectedStatus == status ? "active" : "")"
+                @onclick="() => SelectStatus(status)">
+                @status
+            </button>
+        }
+    </div>
 </section>
 
 <section class="history-card">
-    <div class="history-table">
-        <div class="history-row history-header">
-            <span>Referencia</span>
-            <span>Origen</span>
-            <span>Destino</span>
-            <span>Monto</span>
-            <span>Estatus</span>
-            <span>Fecha UTC</span>
-        </div>
-
-        @foreach (var transfer in TransferList)
-        {
-            <div class="history-row">
-                <span>@transfer.ReferenceNumber</span>
-                <span>@transfer.SourceAccountNumber</span>
-                <span>@transfer.TargetAccountNumber</span>
-                <strong>@transfer.Amount.ToString("N2") @transfer.Currency</strong>
-                <span class="transfer-status @transfer.Status.ToLower()">@transfer.Status</span>
-                <span>@transfer.CreatedAtUtc.ToString("dd MMM yyyy HH:mm")</span>
+    @if (!FilteredTransfers.Any())
+    {
+        <EmptyState
+            Eyebrow="Sin resultados"
+            Title="No hay transferencias"
+            Message="No encontramos operaciones para el filtro seleccionado."
+            ActionText="Ver todo el historial"
+            OnActionClick="ResetFilter" />
+    }
+    else
+    {
+        <div class="history-table">
+            <div class="history-row history-header">
+                <span>Referencia</span>
+                <span>Origen</span>
+                <span>Destino</span>
+                <span>Monto</span>
+                <span>Estatus</span>
+                <span>Fecha UTC</span>
             </div>
-        }
-    </div>
+
+            @foreach (var transfer in FilteredTransfers)
+            {
+                <div class="history-row">
+                    <span>@transfer.ReferenceNumber</span>
+                    <span>@transfer.SourceAccountNumber</span>
+                    <span>@transfer.TargetAccountNumber</span>
+                    <strong>@transfer.Amount.ToString("N2") @transfer.Currency</strong>
+                    <span class="transfer-status @transfer.Status.ToLower()">@transfer.Status</span>
+                    <span>@transfer.CreatedAtUtc.ToString("dd MMM yyyy HH:mm")</span>
+                </div>
+            }
+        </div>
+    }
 </section>
 
 @code {
     private List<TransferHistoryItem> TransferList { get; set; } = new();
 
+    private List<string> StatusOptions { get; set; } = new()
+    {
+        "All",
+        "Completed",
+        "Pending",
+        "Rejected",
+        "Failed demo"
+    };
+
+    private string SelectedStatus { get; set; } = "All";
+
+    private IEnumerable<TransferHistoryItem> FilteredTransfers =>
+        SelectedStatus == "All"
+            ? TransferList
+            : TransferList.Where(transfer =>
+                transfer.Status.Equals(SelectedStatus, StringComparison.OrdinalIgnoreCase));
+
     protected override void OnInitialized()
     {
         TransferList = DashboardService.GetTransferHistory();
+    }
+
+    private void SelectStatus(string status)
+    {
+        SelectedStatus = status;
+    }
+
+    private void ResetFilter()
+    {
+        SelectedStatus = "All";
     }
 }
