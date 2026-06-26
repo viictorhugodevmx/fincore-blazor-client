@@ -11,7 +11,7 @@
     Title="Perfil del cliente"
     Description="Información simulada del cliente para practicar vistas Blazor orientadas a portal bancario." />
 
-<section class="profile-grid">
+<ModuleShell CssClass="profile-grid">
     <article class="profile-card main-profile-card">
         <span>Nombre completo</span>
         <h2>@Customer.FullName</h2>
@@ -47,7 +47,7 @@
         <h2>@Customer.CreatedAtUtc.ToString("dd MMM yyyy")</h2>
         <p>Fecha simulada de registro</p>
     </article>
-</section>
+</ModuleShell>
 
 @code {
     private CustomerProfile Customer { get; set; } = new();

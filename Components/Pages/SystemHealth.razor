@@ -32,18 +32,18 @@
 
 @if (!FilteredHealthItems.Any())
 {
-    <section class="health-grid">
+    <ModuleShell CssClass="health-grid">
         <EmptyState
             Eyebrow="Sin servicios"
             Title="No hay servicios"
             Message="No encontramos servicios para el estado seleccionado."
             ActionText="Ver todos"
             OnActionClick="ResetFilter" />
-    </section>
+    </ModuleShell>
 }
 else
 {
-    <section class="health-grid">
+    <ModuleShell CssClass="health-grid">
         @foreach (var item in FilteredHealthItems)
         {
             <article class="health-card @item.Status.ToLower()">
@@ -59,7 +59,7 @@ else
                 </div>
             </article>
         }
-    </section>
+    </ModuleShell>
 }
 
 @code {

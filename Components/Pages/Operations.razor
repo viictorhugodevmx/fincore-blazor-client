@@ -13,7 +13,7 @@
 
 <BackofficeTabs />
 
-<section class="operations-grid">
+<ModuleShell CssClass="operations-grid">
     <MetricCard
         Label="Cuentas totales"
         Value="@Summary.TotalAccounts.ToString()"
@@ -44,7 +44,7 @@
         Label="Monto operado"
         Value="@($"{Summary.TotalTransferredAmount:N2} {Summary.Currency}")"
         Description="Total simulado en historial" />
-</section>
+</ModuleShell>
 
 @code {
     private OperationalSummary Summary { get; set; } = new();

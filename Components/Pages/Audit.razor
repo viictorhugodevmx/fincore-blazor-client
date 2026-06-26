@@ -42,7 +42,7 @@
     }
     else
     {
-        <div class="audit-timeline">
+        <ModuleShell CssClass="audit-timeline">
             @foreach (var auditEvent in FilteredAuditEvents)
             {
                 <article class="audit-event">
@@ -60,7 +60,7 @@
                     </strong>
                 </article>
             }
-        </div>
+        </ModuleShell>
     }
 </section>
 
