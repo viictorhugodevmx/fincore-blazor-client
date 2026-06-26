@@ -1,0 +1,99 @@
+@page "/settings"
+@rendermode InteractiveServer
+@using Microsoft.AspNetCore.Components.Forms
+@using FincoreBlazorClient.Models
+@using FincoreBlazorClient.Services
+@inject DashboardService DashboardService
+
+<PageTitle>Configuración</PageTitle>
+
+<section class="page-heading">
+    <span class="eyebrow dark">Usuario</span>
+    <h1>Configuración</h1>
+    <p>Preferencias simuladas del portal bancario usando formulario Blazor.</p>
+</section>
+
+<section class="form-shell">
+    @if (!string.IsNullOrWhiteSpace(ResultMessage))
+    {
+        <div class="form-alert @(WasSaved ? "success" : "error")">
+            @ResultMessage
+        </div>
+    }
+
+    <EditForm
+        Model="Preferences"
+        FormName="settings-form"
+        OnValidSubmit="HandleValidSubmit"
+        OnInvalidSubmit="HandleInvalidSubmit"
+        class="transfer-form">
+
+        <DataAnnotationsValidator />
+
+        <div class="form-field">
+            <label>Idioma</label>
+            <InputSelect @bind-Value="Preferences.Language">
+                <option value="">Selecciona idioma</option>
+                <option value="es-MX">Español México</option>
+                <option value="en-US">English US</option>
+            </InputSelect>
+            <ValidationMessage For="@(() => Preferences.Language)" />
+        </div>
+
+        <div class="form-field">
+            <label>Tema</label>
+            <InputSelect @bind-Value="Preferences.Theme">
+                <option value="">Selecciona tema</option>
+                <option value="Light">Claro</option>
+                <option value="Dark">Oscuro</option>
+                <option value="System">Sistema</option>
+            </InputSelect>
+            <ValidationMessage For="@(() => Preferences.Theme)" />
+        </div>
+
+        <div class="settings-options">
+            <label class="check-row">
+                <InputCheckbox @bind-Value="Preferences.EmailNotifications" />
+                <span>Recibir notificaciones por correo</span>
+            </label>
+
+            <label class="check-row">
+                <InputCheckbox @bind-Value="Preferences.TransferAlerts" />
+                <span>Alertas de transferencias</span>
+            </label>
+
+            <label class="check-row">
+                <InputCheckbox @bind-Value="Preferences.RiskAlerts" />
+                <span>Alertas de riesgo</span>
+            </label>
+        </div>
+
+        <button type="submit" class="primary-button">
+            Guardar preferencias
+        </button>
+    </EditForm>
+</section>
+
+@code {
+    private UserPreferences Preferences { get; set; } = new();
+    private bool WasSaved { get; set; }
+    private string ResultMessage { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        Preferences = DashboardService.GetUserPreferences();
+    }
+
+    private void HandleValidSubmit()
+    {
+        Preferences = DashboardService.SaveUserPreferences(Preferences);
+        WasSaved = true;
+        ResultMessage = "Preferencias guardadas correctamente.";
+    }
+
+    private void HandleInvalidSubmit()
+    {
+        WasSaved = false;
+        ResultMessage = "Revisa la configuración seleccionada.";
+    }
+}

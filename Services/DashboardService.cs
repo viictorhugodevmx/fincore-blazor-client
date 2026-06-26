@@ -215,4 +215,21 @@ public class DashboardService
             CreatedAtUtc = DateTime.UtcNow.AddMonths(-8)
         };
     }
+
+    public UserPreferences GetUserPreferences()
+    {
+        return new UserPreferences
+        {
+            Language = "es-MX",
+            Theme = "Light",
+            EmailNotifications = true,
+            TransferAlerts = true,
+            RiskAlerts = true
+        };
+    }
+
+    public UserPreferences SaveUserPreferences(UserPreferences preferences)
+    {
+        return preferences;
+    }
 }
