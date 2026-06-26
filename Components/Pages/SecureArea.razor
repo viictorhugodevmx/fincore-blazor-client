@@ -2,6 +2,7 @@
 @rendermode InteractiveServer
 @using FincoreBlazorClient.Models
 @using FincoreBlazorClient.Services
+@using FincoreBlazorClient.Components.Shared
 @inject AuthSessionService AuthSessionService
 @inject NavigationManager NavigationManager
 
@@ -14,6 +15,8 @@
         <h1>Área segura</h1>
         <p>Contenido protegido visualmente usando sesión simulada en Blazor.</p>
     </section>
+
+    <BackofficeTabs />
 
     <section class="secure-grid">
         <article class="secure-card">

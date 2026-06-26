@@ -1,6 +1,8 @@
 @page "/system-health"
+@rendermode InteractiveServer
 @using FincoreBlazorClient.Models
 @using FincoreBlazorClient.Services
+@using FincoreBlazorClient.Components.Shared
 @inject DashboardService DashboardService
 
 <PageTitle>Salud del sistema</PageTitle>
@@ -8,32 +10,91 @@
 <section class="page-heading">
     <span class="eyebrow dark">Operación técnica</span>
     <h1>Salud del sistema</h1>
-    <p>Servicios simulados del portal para visualizar disponibilidad, latencia y estado operativo.</p>
+    <p>Servicios simulados del portal con filtro por estado operativo.</p>
 </section>
 
-<section class="health-grid">
-    @foreach (var item in HealthItems)
-    {
-        <article class="health-card @item.Status.ToLower()">
-            <div>
-                <span class="health-status @item.Status.ToLower()">@item.Status</span>
-                <h2>@item.ServiceName</h2>
-                <p>@item.Detail</p>
-            </div>
+<BackofficeTabs />
 
-            <div class="health-meta">
-                <strong>@item.LatencyMs ms</strong>
-                <small>@item.CheckedAtUtc.ToString("dd MMM yyyy HH:mm") UTC</small>
-            </div>
-        </article>
-    }
+<section class="filter-card">
+    <span>Filtrar por estado</span>
+
+    <div class="filter-actions">
+        @foreach (var status in StatusOptions)
+        {
+            <button
+                type="button"
+                class="filter-pill @(SelectedStatus == status ? "active" : "")"
+                @onclick="() => SelectStatus(status)">
+                @status
+            </button>
+        }
+    </div>
 </section>
+
+@if (!FilteredHealthItems.Any())
+{
+    <section class="health-grid">
+        <EmptyState
+            Eyebrow="Sin servicios"
+            Title="No hay servicios"
+            Message="No encontramos servicios para el estado seleccionado."
+            ActionText="Ver todos"
+            OnActionClick="ResetFilter" />
+    </section>
+}
+else
+{
+    <section class="health-grid">
+        @foreach (var item in FilteredHealthItems)
+        {
+            <article class="health-card @item.Status.ToLower()">
+                <div>
+                    <span class="health-status @item.Status.ToLower()">@item.Status</span>
+                    <h2>@item.ServiceName</h2>
+                    <p>@item.Detail</p>
+                </div>
+
+                <div class="health-meta">
+                    <strong>@item.LatencyMs ms</strong>
+                    <small>@item.CheckedAtUtc.ToString("dd MMM yyyy HH:mm") UTC</small>
+                </div>
+            </article>
+        }
+    </section>
+}
 
 @code {
     private List<SystemHealthItem> HealthItems { get; set; } = new();
 
+    private List<string> StatusOptions { get; set; } = new()
+    {
+        "All",
+        "Healthy",
+        "Degraded",
+        "Offline",
+        "Timeout demo"
+    };
+
+    private string SelectedStatus { get; set; } = "All";
+
+    private IEnumerable<SystemHealthItem> FilteredHealthItems =>
+        SelectedStatus == "All"
+            ? HealthItems
+            : HealthItems.Where(item =>
+                item.Status.Equals(SelectedStatus, StringComparison.OrdinalIgnoreCase));
+
     protected override void OnInitialized()
     {
         HealthItems = DashboardService.GetSystemHealth();
+    }
+
+    private void SelectStatus(string status)
+    {
+        SelectedStatus = status;
+    }
+
+    private void ResetFilter()
+    {
+        SelectedStatus = "All";
     }
 }
