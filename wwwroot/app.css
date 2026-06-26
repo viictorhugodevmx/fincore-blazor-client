@@ -1277,3 +1277,8 @@ a.primary-button:hover {
     background: #155eef;
     border-color: #155eef;
 }
+
+.module-shell {
+    display: grid;
+    gap: 16px;
+}

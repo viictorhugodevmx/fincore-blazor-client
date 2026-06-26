@@ -11,12 +11,12 @@
     Title="Alertas de riesgo"
     Description="Listado simulado de alertas para practicar render condicional y clases dinámicas en Blazor." />
 
-<section class="risk-list">
+<ModuleShell CssClass="risk-list">
     @foreach (var alert in AlertList)
     {
         <RiskAlertCard Alert="alert" />
     }
-</section>
+</ModuleShell>
 
 @code {
     private List<RiskAlert> AlertList { get; set; } = new();
