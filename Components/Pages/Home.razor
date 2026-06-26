@@ -4,17 +4,14 @@
 @using FincoreBlazorClient.Components.Shared
 @inject DashboardService DashboardService
 
-<PageTitle>FinCore Blazor Client</PageTitle>
+<PageTitle>Dashboard</PageTitle>
 
-<section class="hero">
-    <div>
-        <span class="eyebrow">FinCore Blazor Client</span>
-        <h1>Dashboard financiero</h1>
-        <p>
-            Frontend Blazor para practicar componentes, estado y UI fintech usando C#.
-        </p>
-    </div>
-</section>
+<PageHeader
+    Eyebrow="Bankaool FinCore 360"
+    Title="Dashboard fintech"
+    Description="Vista principal del portal bancario con resumen de cuenta, movimientos y accesos rápidos." />
+
+<QuickActions />
 
 <section class="metrics-grid">
     <MetricCard
@@ -26,31 +23,29 @@
     <MetricCard
         Label="Saldo disponible"
         Value="@($"{Account.AvailableBalance:N2} {Account.Currency}")"
-        Description="Balance simulado" />
+        Description="Cuenta principal" />
 
     <MetricCard
-        Label="Transferencias"
+        Label="Transferencias pendientes"
         Value="@Account.PendingTransfers.ToString()"
-        Description="Pendientes de revisión" />
+        Description="Operaciones por revisar" />
 
     <MetricCard
         Label="Riesgo"
         Value="@Account.RiskLevel"
-        Description="Nivel operativo" />
+        Description="Nivel operativo actual" />
 </section>
 
 <section class="movements-section">
-    <div class="section-heading">
-        <span class="eyebrow dark">Actividad reciente</span>
-        <h2>Últimos movimientos</h2>
+    <div class="section-title">
+        <span>Actividad reciente</span>
+        <h2>Movimientos</h2>
     </div>
 
-    <div class="movement-list">
-        @foreach (var movement in RecentMovements)
-        {
-            <MovementRow Movement="movement" />
-        }
-    </div>
+    @foreach (var movement in RecentMovements)
+    {
+        <MovementRow Movement="movement" />
+    }
 </section>
 
 @code {

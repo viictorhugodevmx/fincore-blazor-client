@@ -1212,3 +1212,68 @@ a.primary-button:hover {
     background: #155eef;
     border-color: #155eef;
 }
+
+.quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: -6px 0 24px;
+    padding: 12px;
+    border-radius: 18px;
+    background: #f8fafc;
+    border: 1px solid #e5eaf3;
+}
+
+.quick-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    padding: 0 14px;
+    border-radius: 999px;
+    color: #155eef;
+    background: white;
+    border: 1px solid #dbeafe;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.quick-actions a:hover {
+    color: #0f46b8;
+    background: #eff6ff;
+    text-decoration: none;
+}
+
+.quick-actions a,
+.quick-actions a:visited {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    padding: 0 14px;
+    border-radius: 999px;
+    color: #155eef !important;
+    background: white;
+    border: 1px solid #dbeafe;
+    font-weight: 800;
+    text-decoration: none !important;
+}
+
+.quick-actions a:hover {
+    color: #0f46b8 !important;
+    background: #eff6ff;
+    text-decoration: none !important;
+}
+
+.quick-actions a.active,
+.quick-actions a.active:visited {
+    color: white !important;
+    background: #155eef;
+    border-color: #155eef;
+}
+
+.quick-actions a.active:hover {
+    color: white !important;
+    background: #155eef;
+    border-color: #155eef;
+}
