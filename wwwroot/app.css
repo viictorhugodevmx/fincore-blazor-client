@@ -1282,3 +1282,12 @@ a.primary-button:hover {
     display: grid;
     gap: 16px;
 }
+
+.status-badge {
+    display: inline-flex;
+    width: fit-content;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+}

@@ -1,0 +1,14 @@
+<span class="@BadgeClass">
+    @Text
+</span>
+
+@code {
+    [Parameter]
+    public string Text { get; set; } = string.Empty;
+
+    [Parameter]
+    public string CssClass { get; set; } = "status-badge";
+
+    private string BadgeClass =>
+        $"{CssClass} {Text.ToLower().Replace(" ", "-")}";
+}

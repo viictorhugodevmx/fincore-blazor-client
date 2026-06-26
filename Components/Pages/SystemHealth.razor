@@ -48,7 +48,7 @@ else
         {
             <article class="health-card @item.Status.ToLower()">
                 <div>
-                    <span class="health-status @item.Status.ToLower()">@item.Status</span>
+                    <StatusBadge Text="@item.Status" CssClass="health-status" />
                     <h2>@item.ServiceName</h2>
                     <p>@item.Detail</p>
                 </div>
