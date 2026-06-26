@@ -1200,3 +1200,15 @@ a.primary-button:hover {
     background: #eff6ff;
     text-decoration: none;
 }
+
+.backoffice-tab.active {
+    color: white;
+    background: #155eef;
+    border-color: #155eef;
+}
+
+.backoffice-tab.active:hover {
+    color: white;
+    background: #155eef;
+    border-color: #155eef;
+}

@@ -1,6 +1,28 @@
+@inject NavigationManager NavigationManager
+
 <nav class="backoffice-tabs">
-    <a class="backoffice-tab" href="/operations">Operaciones</a>
-    <a class="backoffice-tab" href="/audit">Auditoría</a>
-    <a class="backoffice-tab" href="/system-health">Salud sistema</a>
-    <a class="backoffice-tab" href="/secure-area">Área segura</a>
+    <a class="backoffice-tab @(IsActive("/operations") ? "active" : "")" href="/operations">
+        Operaciones
+    </a>
+
+    <a class="backoffice-tab @(IsActive("/audit") ? "active" : "")" href="/audit">
+        Auditoría
+    </a>
+
+    <a class="backoffice-tab @(IsActive("/system-health") ? "active" : "")" href="/system-health">
+        Salud sistema
+    </a>
+
+    <a class="backoffice-tab @(IsActive("/secure-area") ? "active" : "")" href="/secure-area">
+        Área segura
+    </a>
 </nav>
+
+@code {
+    private bool IsActive(string path)
+    {
+        var currentPath = new Uri(NavigationManager.Uri).AbsolutePath;
+
+        return currentPath.Equals(path, StringComparison.OrdinalIgnoreCase);
+    }
+}
