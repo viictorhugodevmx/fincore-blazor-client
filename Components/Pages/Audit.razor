@@ -1,4 +1,5 @@
 @page "/audit"
+@rendermode InteractiveServer
 @using FincoreBlazorClient.Models
 @using FincoreBlazorClient.Services
 @inject DashboardService DashboardService
@@ -8,12 +9,28 @@
 <section class="page-heading">
     <span class="eyebrow dark">Seguridad</span>
     <h1>Auditoría</h1>
-    <p>Eventos simulados del portal para practicar trazabilidad bancaria.</p>
+    <p>Eventos simulados del portal con filtro por módulo.</p>
+</section>
+
+<section class="filter-card">
+    <span>Filtrar por módulo</span>
+
+    <div class="filter-actions">
+        @foreach (var module in ModuleOptions)
+        {
+            <button
+                type="button"
+                class="filter-pill @(SelectedModule == module ? "active" : "")"
+                @onclick="() => SelectModule(module)">
+                @module
+            </button>
+        }
+    </div>
 </section>
 
 <section class="audit-card">
     <div class="audit-timeline">
-        @foreach (var auditEvent in AuditEvents)
+        @foreach (var auditEvent in FilteredAuditEvents)
         {
             <article class="audit-event">
                 <div class="audit-dot @auditEvent.Result.ToLower()"></div>
@@ -36,8 +53,30 @@
 @code {
     private List<AuditEvent> AuditEvents { get; set; } = new();
 
+    private List<string> ModuleOptions { get; set; } = new()
+    {
+        "All",
+        "Auth",
+        "Transfers",
+        "Risk",
+        "Security"
+    };
+
+    private string SelectedModule { get; set; } = "All";
+
+    private IEnumerable<AuditEvent> FilteredAuditEvents =>
+        SelectedModule == "All"
+            ? AuditEvents
+            : AuditEvents.Where(auditEvent =>
+                auditEvent.Module.Equals(SelectedModule, StringComparison.OrdinalIgnoreCase));
+
     protected override void OnInitialized()
     {
         AuditEvents = DashboardService.GetAuditEvents();
+    }
+
+    private void SelectModule(string module)
+    {
+        SelectedModule = module;
     }
 }

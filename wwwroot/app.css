@@ -1073,3 +1073,11 @@ a.primary-button:hover {
         width: fit-content;
     }
 }
+
+.audit-card + .audit-card {
+    margin-top: 18px;
+}
+
+.audit-card + .audit-card {
+    margin-top: 18px;
+}
