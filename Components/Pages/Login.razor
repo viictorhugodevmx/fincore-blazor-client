@@ -1,0 +1,78 @@
+@page "/login"
+@rendermode InteractiveServer
+@using Microsoft.AspNetCore.Components.Forms
+@using FincoreBlazorClient.Models
+@using FincoreBlazorClient.Services
+@inject NavigationManager NavigationManager
+@inject AuthSessionService AuthSessionService
+
+<PageTitle>Login</PageTitle>
+
+<section class="login-shell">
+    <article class="login-card">
+        <span class="eyebrow dark">Acceso</span>
+        <h1>Iniciar sesión</h1>
+        <p>Login visual simulado para practicar formularios Blazor.</p>
+
+        @if (!string.IsNullOrWhiteSpace(ResultMessage))
+        {
+            <div class="form-alert error">
+                @ResultMessage
+            </div>
+        }
+
+        <EditForm
+            Model="LoginData"
+            FormName="login-form"
+            OnValidSubmit="HandleValidSubmit"
+            OnInvalidSubmit="HandleInvalidSubmit"
+            class="transfer-form">
+
+            <DataAnnotationsValidator />
+
+            <div class="form-field">
+                <label>Correo</label>
+                <InputText @bind-Value="LoginData.Email" placeholder="victor@fincoreblazor.dev" />
+                <ValidationMessage For="@(() => LoginData.Email)" />
+            </div>
+
+            <div class="form-field">
+                <label>Contraseña</label>
+                <InputText @bind-Value="LoginData.Password" type="password" placeholder="Password123" />
+                <ValidationMessage For="@(() => LoginData.Password)" />
+            </div>
+
+            <button type="submit" class="primary-button">
+                Entrar
+            </button>
+        </EditForm>
+
+        <div class="login-help">
+            <strong>Demo:</strong>
+            <span>victor@fincoreblazor.dev / Password123</span>
+        </div>
+    </article>
+</section>
+
+@code {
+    private LoginForm LoginData { get; set; } = new();
+    private string ResultMessage { get; set; } = string.Empty;
+
+    private void HandleValidSubmit()
+    {
+        var wasLoggedIn = AuthSessionService.Login(LoginData.Email, LoginData.Password);
+
+        if (!wasLoggedIn)
+        {
+            ResultMessage = "Correo o contraseña incorrectos.";
+            return;
+        }
+
+        NavigationManager.NavigateTo("/session");
+    }
+
+    private void HandleInvalidSubmit()
+    {
+        ResultMessage = "Revisa tus credenciales.";
+    }
+}
