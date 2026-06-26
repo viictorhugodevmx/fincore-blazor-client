@@ -232,4 +232,47 @@ public class DashboardService
     {
         return preferences;
     }
+
+    public List<AuditEvent> GetAuditEvents()
+    {
+        return new List<AuditEvent>
+        {
+            new AuditEvent
+            {
+                EventId = "AUD-001",
+                Actor = "victor@fincoreblazor.dev",
+                Action = "Login",
+                Module = "Auth",
+                Result = "Success",
+                CreatedAtUtc = DateTime.UtcNow.AddMinutes(-35)
+            },
+            new AuditEvent
+            {
+                EventId = "AUD-002",
+                Actor = "victor@fincoreblazor.dev",
+                Action = "Create transfer",
+                Module = "Transfers",
+                Result = "Success",
+                CreatedAtUtc = DateTime.UtcNow.AddMinutes(-28)
+            },
+            new AuditEvent
+            {
+                EventId = "AUD-003",
+                Actor = "risk.engine@fincoreblazor.dev",
+                Action = "Review account",
+                Module = "Risk",
+                Result = "Warning",
+                CreatedAtUtc = DateTime.UtcNow.AddMinutes(-18)
+            },
+            new AuditEvent
+            {
+                EventId = "AUD-004",
+                Actor = "victor@fincoreblazor.dev",
+                Action = "Open secure area",
+                Module = "Security",
+                Result = "Success",
+                CreatedAtUtc = DateTime.UtcNow.AddMinutes(-8)
+            }
+        };
+    }
 }

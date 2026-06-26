@@ -1,0 +1,43 @@
+@page "/audit"
+@using FincoreBlazorClient.Models
+@using FincoreBlazorClient.Services
+@inject DashboardService DashboardService
+
+<PageTitle>Auditoría</PageTitle>
+
+<section class="page-heading">
+    <span class="eyebrow dark">Seguridad</span>
+    <h1>Auditoría</h1>
+    <p>Eventos simulados del portal para practicar trazabilidad bancaria.</p>
+</section>
+
+<section class="audit-card">
+    <div class="audit-timeline">
+        @foreach (var auditEvent in AuditEvents)
+        {
+            <article class="audit-event">
+                <div class="audit-dot @auditEvent.Result.ToLower()"></div>
+
+                <div>
+                    <span>@auditEvent.EventId · @auditEvent.Module</span>
+                    <h2>@auditEvent.Action</h2>
+                    <p>@auditEvent.Actor</p>
+                    <small>@auditEvent.CreatedAtUtc.ToString("dd MMM yyyy HH:mm") UTC</small>
+                </div>
+
+                <strong class="audit-result @auditEvent.Result.ToLower()">
+                    @auditEvent.Result
+                </strong>
+            </article>
+        }
+    </div>
+</section>
+
+@code {
+    private List<AuditEvent> AuditEvents { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        AuditEvents = DashboardService.GetAuditEvents();
+    }
+}
