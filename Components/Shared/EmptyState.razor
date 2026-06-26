@@ -9,9 +9,10 @@
 
     @if (!string.IsNullOrWhiteSpace(ActionText))
     {
-        <button type="button" class="primary-button empty-action" @onclick="OnActionClick">
-            @ActionText
-        </button>
+        <ActionButton
+            Text="@ActionText"
+            CssClass="primary-button empty-action"
+            OnClick="OnActionClick" />
     }
 </section>
 
