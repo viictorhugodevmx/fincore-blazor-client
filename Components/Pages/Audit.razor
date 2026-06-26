@@ -55,9 +55,7 @@
                         <small>@auditEvent.CreatedAtUtc.ToString("dd MMM yyyy HH:mm") UTC</small>
                     </div>
 
-                    <strong class="audit-result @auditEvent.Result.ToLower()">
-                        @auditEvent.Result
-                    </strong>
+                    <StatusBadge Text="@auditEvent.Result" CssClass="audit-result" />
                 </article>
             }
         </ModuleShell>

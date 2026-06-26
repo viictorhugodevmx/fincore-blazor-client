@@ -9,6 +9,12 @@
     [Parameter]
     public string CssClass { get; set; } = "status-badge";
 
+    private string NormalizedText =>
+        Text
+            .Trim()
+            .ToLowerInvariant()
+            .Replace(" ", "-");
+
     private string BadgeClass =>
-        $"{CssClass} {Text.ToLower().Replace(" ", "-")}";
+        $"{CssClass} {NormalizedText}";
 }

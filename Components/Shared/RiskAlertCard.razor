@@ -2,7 +2,7 @@
 
 <article class="risk-card @Alert.Severity.ToLower()">
     <div>
-        <span class="risk-severity @Alert.Severity.ToLower()">@Alert.Severity</span>
+        <StatusBadge Text="@Alert.Severity" CssClass="risk-severity" />
         <h2>@Alert.Title</h2>
         <p>@Alert.Detail</p>
     </div>

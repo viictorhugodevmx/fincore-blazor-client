@@ -1,21 +1,22 @@
 @page "/not-found"
+@using FincoreBlazorClient.Components.Shared
 
 <PageTitle>Página no encontrada</PageTitle>
 
 <section class="not-found-shell">
     <article class="not-found-card">
-        <span class="session-badge danger">404</span>
+        <StatusBadge Text="404" CssClass="session-badge danger" />
+
         <h1>Página no encontrada</h1>
         <p>La ruta que intentaste abrir no existe dentro del portal bancario.</p>
 
         <div class="actions-row">
-            <a class="primary-button" href="/">
-                Volver al dashboard
-            </a>
+            <ActionLink Href="/" Text="Volver al dashboard" />
 
-            <a class="primary-link" href="/operations">
-                Ver resumen operativo
-            </a>
+            <ActionLink
+                Href="/operations"
+                Text="Ver resumen operativo"
+                CssClass="primary-link" />
         </div>
     </article>
 </section>

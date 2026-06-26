@@ -57,7 +57,7 @@
                     <span>@transfer.SourceAccountNumber</span>
                     <span>@transfer.TargetAccountNumber</span>
                     <strong>@transfer.Amount.ToString("N2") @transfer.Currency</strong>
-                    <span class="transfer-status @transfer.Status.ToLower()">@transfer.Status</span>
+                    <StatusBadge Text="@transfer.Status" CssClass="transfer-status" />
                     <span>@transfer.CreatedAtUtc.ToString("dd MMM yyyy HH:mm")</span>
                 </div>
             }

@@ -1,21 +1,22 @@
 @page "/access-denied"
+@using FincoreBlazorClient.Components.Shared
 
 <PageTitle>Acceso denegado</PageTitle>
 
 <section class="access-denied-shell">
     <article class="access-denied-card">
-        <span class="session-badge danger">Acceso denegado</span>
+        <StatusBadge Text="Acceso denegado" CssClass="session-badge danger" />
+
         <h1>No tienes permisos para ver esta sección</h1>
         <p>Inicia sesión para acceder al área segura del portal bancario.</p>
 
         <div class="actions-row">
-            <a class="primary-button" href="/login">
-                Ir al login
-            </a>
+            <ActionLink Href="/login" Text="Ir al login" />
 
-            <a class="primary-link" href="/">
-                Volver al dashboard
-            </a>
+            <ActionLink
+                Href="/"
+                Text="Volver al dashboard"
+                CssClass="primary-link" />
         </div>
     </article>
 </section>
