@@ -1,0 +1,55 @@
+@page "/operations"
+@using FincoreBlazorClient.Models
+@using FincoreBlazorClient.Services
+@using FincoreBlazorClient.Components.Shared
+@inject DashboardService DashboardService
+
+<PageTitle>Resumen operativo</PageTitle>
+
+<section class="page-heading">
+    <span class="eyebrow dark">Backoffice</span>
+    <h1>Resumen operativo</h1>
+    <p>Métricas calculadas a partir de cuentas y transferencias simuladas.</p>
+</section>
+
+<section class="operations-grid">
+    <MetricCard
+        Label="Cuentas totales"
+        Value="@Summary.TotalAccounts.ToString()"
+        Description="@($"{Summary.ActiveAccounts} activas · {Summary.BlockedAccounts} bloqueadas")"
+        IsMain="true" />
+
+    <MetricCard
+        Label="Transferencias totales"
+        Value="@Summary.TotalTransfers.ToString()"
+        Description="Operaciones registradas" />
+
+    <MetricCard
+        Label="Completadas"
+        Value="@Summary.CompletedTransfers.ToString()"
+        Description="Transferencias exitosas" />
+
+    <MetricCard
+        Label="Pendientes"
+        Value="@Summary.PendingTransfers.ToString()"
+        Description="Operaciones por revisar" />
+
+    <MetricCard
+        Label="Rechazadas"
+        Value="@Summary.RejectedTransfers.ToString()"
+        Description="Operaciones no aprobadas" />
+
+    <MetricCard
+        Label="Monto operado"
+        Value="@($"{Summary.TotalTransferredAmount:N2} {Summary.Currency}")"
+        Description="Total simulado en historial" />
+</section>
+
+@code {
+    private OperationalSummary Summary { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        Summary = DashboardService.GetOperationalSummary();
+    }
+}
