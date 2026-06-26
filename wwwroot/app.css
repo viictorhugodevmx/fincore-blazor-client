@@ -1081,3 +1081,91 @@ a.primary-button:hover {
 .audit-card + .audit-card {
     margin-top: 18px;
 }
+
+.health-grid {
+    display: grid;
+    gap: 16px;
+}
+
+.health-card {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 24px;
+    border-radius: 22px;
+    background: white;
+    border: 1px solid #e5eaf3;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+}
+
+.health-card.healthy {
+    border-left: 6px solid #039855;
+}
+
+.health-card.degraded {
+    border-left: 6px solid #dc6803;
+}
+
+.health-card.offline {
+    border-left: 6px solid #d92d20;
+}
+
+.health-card h2 {
+    margin: 10px 0 8px;
+    color: #101828;
+    font-size: 22px;
+}
+
+.health-card p {
+    margin: 0;
+    color: #667085;
+}
+
+.health-status {
+    display: inline-flex;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.health-status.healthy {
+    color: #027a48;
+    background: #ecfdf3;
+}
+
+.health-status.degraded {
+    color: #b54708;
+    background: #fffaeb;
+}
+
+.health-status.offline {
+    color: #b42318;
+    background: #fef3f2;
+}
+
+.health-meta {
+    display: grid;
+    gap: 6px;
+    min-width: 150px;
+    text-align: right;
+}
+
+.health-meta strong {
+    color: #101828;
+    font-size: 22px;
+}
+
+.health-meta small {
+    color: #667085;
+}
+
+@media (max-width: 768px) {
+    .health-card {
+        flex-direction: column;
+    }
+
+    .health-meta {
+        text-align: left;
+    }
+}

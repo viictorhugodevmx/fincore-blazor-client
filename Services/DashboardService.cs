@@ -275,4 +275,43 @@ public class DashboardService
             }
         };
     }
+
+    public List<SystemHealthItem> GetSystemHealth()
+    {
+        return new List<SystemHealthItem>
+        {
+            new SystemHealthItem
+            {
+                ServiceName = "Auth API",
+                Status = "Healthy",
+                Detail = "Servicio de autenticación disponible.",
+                LatencyMs = 42,
+                CheckedAtUtc = DateTime.UtcNow
+            },
+            new SystemHealthItem
+            {
+                ServiceName = "Transfers API",
+                Status = "Degraded",
+                Detail = "Latencia elevada en operaciones SPEI simuladas.",
+                LatencyMs = 280,
+                CheckedAtUtc = DateTime.UtcNow
+            },
+            new SystemHealthItem
+            {
+                ServiceName = "Risk Engine",
+                Status = "Healthy",
+                Detail = "Motor de riesgo respondiendo correctamente.",
+                LatencyMs = 88,
+                CheckedAtUtc = DateTime.UtcNow
+            },
+            new SystemHealthItem
+            {
+                ServiceName = "Audit Store",
+                Status = "Offline",
+                Detail = "Repositorio de auditoría no disponible en demo.",
+                LatencyMs = 0,
+                CheckedAtUtc = DateTime.UtcNow
+            }
+        };
+    }
 }
