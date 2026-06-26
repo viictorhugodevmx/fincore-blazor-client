@@ -13,7 +13,7 @@
 
 <QuickActions />
 
-<section class="metrics-grid">
+<ModuleShell CssClass="metrics-grid">
     <MetricCard
         Label="Cliente"
         Value="@Account.CustomerName"
@@ -34,7 +34,7 @@
         Label="Riesgo"
         Value="@Account.RiskLevel"
         Description="Nivel operativo actual" />
-</section>
+</ModuleShell>
 
 <section class="movements-section">
     <div class="section-title">
@@ -42,10 +42,12 @@
         <h2>Movimientos</h2>
     </div>
 
-    @foreach (var movement in RecentMovements)
-    {
-        <MovementRow Movement="movement" />
-    }
+    <ModuleShell>
+        @foreach (var movement in RecentMovements)
+        {
+            <MovementRow Movement="movement" />
+        }
+    </ModuleShell>
 </section>
 
 @code {
