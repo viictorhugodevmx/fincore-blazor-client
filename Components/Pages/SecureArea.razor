@@ -10,11 +10,10 @@
 
 @if (SessionState.IsAuthenticated)
 {
-    <section class="page-heading">
-        <span class="eyebrow dark">Seguridad</span>
-        <h1>Área segura</h1>
-        <p>Contenido protegido visualmente usando sesión simulada en Blazor.</p>
-    </section>
+    <PageHeader
+        Eyebrow="Seguridad"
+        Title="Área segura"
+        Description="Contenido protegido visualmente usando sesión simulada en Blazor." />
 
     <BackofficeTabs />
 

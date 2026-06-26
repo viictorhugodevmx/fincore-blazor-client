@@ -6,11 +6,10 @@
 
 <PageTitle>Alertas de riesgo</PageTitle>
 
-<section class="page-heading">
-    <span class="eyebrow dark">Riesgo</span>
-    <h1>Alertas de riesgo</h1>
-    <p>Listado simulado de alertas para practicar render condicional y clases dinámicas en Blazor.</p>
-</section>
+<PageHeader
+    Eyebrow="Riesgo"
+    Title="Alertas de riesgo"
+    Description="Listado simulado de alertas para practicar render condicional y clases dinámicas en Blazor." />
 
 <section class="risk-list">
     @foreach (var alert in AlertList)

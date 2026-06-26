@@ -6,11 +6,10 @@
 
 <PageTitle>Cuentas</PageTitle>
 
-<section class="page-heading">
-    <span class="eyebrow dark">Productos bancarios</span>
-    <h1>Cuentas</h1>
-    <p>Consulta de cuentas simuladas usando componentes y routing Blazor.</p>
-</section>
+<PageHeader
+    Eyebrow="Productos bancarios"
+    Title="Cuentas"
+    Description="Consulta de cuentas simuladas usando componentes y routing Blazor." />
 
 <section class="accounts-list">
     @foreach (var account in AccountList)

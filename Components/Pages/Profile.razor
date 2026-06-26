@@ -1,15 +1,15 @@
 @page "/profile"
 @using FincoreBlazorClient.Models
 @using FincoreBlazorClient.Services
+@using FincoreBlazorClient.Components.Shared
 @inject DashboardService DashboardService
 
 <PageTitle>Perfil del cliente</PageTitle>
 
-<section class="page-heading">
-    <span class="eyebrow dark">Cliente</span>
-    <h1>Perfil del cliente</h1>
-    <p>Información simulada del cliente para practicar vistas Blazor orientadas a portal bancario.</p>
-</section>
+<PageHeader
+    Eyebrow="Cliente"
+    Title="Perfil del cliente"
+    Description="Información simulada del cliente para practicar vistas Blazor orientadas a portal bancario." />
 
 <section class="profile-grid">
     <article class="profile-card main-profile-card">

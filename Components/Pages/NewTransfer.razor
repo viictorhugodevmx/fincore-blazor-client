@@ -8,11 +8,10 @@
 
 <PageTitle>Nueva transferencia</PageTitle>
 
-<section class="page-heading">
-    <span class="eyebrow dark">Operación bancaria</span>
-    <h1>Nueva transferencia</h1>
-    <p>Formulario Blazor con validación, binding de datos y comprobante visual.</p>
-</section>
+<PageHeader
+    Eyebrow="Operación bancaria"
+    Title="Nueva transferencia"
+    Description="Formulario Blazor con validación, binding de datos y comprobante visual." />
 
 <section class="form-shell">
     @if (!string.IsNullOrWhiteSpace(ResultMessage))
