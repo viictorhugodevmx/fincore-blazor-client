@@ -1,0 +1,51 @@
+@page "/secure-area"
+@rendermode InteractiveServer
+@using FincoreBlazorClient.Models
+@using FincoreBlazorClient.Services
+@inject AuthSessionService AuthSessionService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Área segura</PageTitle>
+
+@if (SessionState.IsAuthenticated)
+{
+    <section class="page-heading">
+        <span class="eyebrow dark">Seguridad</span>
+        <h1>Área segura</h1>
+        <p>Contenido protegido visualmente usando sesión simulada en Blazor.</p>
+    </section>
+
+    <section class="secure-grid">
+        <article class="secure-card">
+            <span>Usuario autenticado</span>
+            <h2>@SessionState.Email</h2>
+            <p>Acceso permitido al módulo seguro.</p>
+        </article>
+
+        <article class="secure-card">
+            <span>Permiso</span>
+            <h2>Backoffice Viewer</h2>
+            <p>Rol simulado para consultar información bancaria.</p>
+        </article>
+
+        <article class="secure-card">
+            <span>Sesión UTC</span>
+            <h2>@SessionState.LoggedAtUtc?.ToString("dd MMM yyyy HH:mm")</h2>
+            <p>Fecha de inicio de sesión.</p>
+        </article>
+    </section>
+}
+
+@code {
+    private AuthSessionState SessionState { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        SessionState = AuthSessionService.GetSession();
+
+        if (!SessionState.IsAuthenticated)
+        {
+            NavigationManager.NavigateTo("/access-denied");
+        }
+    }
+}

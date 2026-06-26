@@ -7,7 +7,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddScoped<DashboardService>();
-builder.Services.AddScoped<AuthSessionService>();
+builder.Services.AddSingleton<AuthSessionService>();
 
 var app = builder.Build();
 
