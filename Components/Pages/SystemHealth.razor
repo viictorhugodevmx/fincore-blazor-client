@@ -14,52 +14,61 @@
 
 <BackofficeTabs />
 
-<section class="filter-card">
-    <span>Filtrar por estado</span>
-
-    <div class="filter-actions">
-        @foreach (var status in StatusOptions)
-        {
-            <button
-                type="button"
-                class="filter-pill @(SelectedStatus == status ? "active" : "")"
-                @onclick="() => SelectStatus(status)">
-                @status
-            </button>
-        }
-    </div>
-</section>
-
-@if (!FilteredHealthItems.Any())
+@if (IsLoading)
 {
-    <ModuleShell CssClass="health-grid">
-        <EmptyState
-            Eyebrow="Sin servicios"
-            Title="No hay servicios"
-            Message="No encontramos servicios para el estado seleccionado."
-            ActionText="Ver todos"
-            OnActionClick="ResetFilter" />
-    </ModuleShell>
+    <LoadingState
+        Title="Consultando servicios"
+        Message="Validando disponibilidad y latencia del sistema." />
 }
 else
 {
-    <ModuleShell CssClass="health-grid">
-        @foreach (var item in FilteredHealthItems)
-        {
-            <article class="health-card @item.Status.ToLower()">
-                <div>
-                    <StatusBadge Text="@item.Status" CssClass="health-status" />
-                    <h2>@item.ServiceName</h2>
-                    <p>@item.Detail</p>
-                </div>
+    <section class="filter-card">
+        <span>Filtrar por estado</span>
 
-                <div class="health-meta">
-                    <strong>@item.LatencyMs ms</strong>
-                    <small>@item.CheckedAtUtc.ToString("dd MMM yyyy HH:mm") UTC</small>
-                </div>
-            </article>
-        }
-    </ModuleShell>
+        <div class="filter-actions">
+            @foreach (var status in StatusOptions)
+            {
+                <button
+                    type="button"
+                    class="filter-pill @(SelectedStatus == status ? "active" : "")"
+                    @onclick="() => SelectStatus(status)">
+                    @status
+                </button>
+            }
+        </div>
+    </section>
+
+    @if (!FilteredHealthItems.Any())
+    {
+        <ModuleShell CssClass="health-grid">
+            <EmptyState
+                Eyebrow="Sin servicios"
+                Title="No hay servicios"
+                Message="No encontramos servicios para el estado seleccionado."
+                ActionText="Ver todos"
+                OnActionClick="ResetFilter" />
+        </ModuleShell>
+    }
+    else
+    {
+        <ModuleShell CssClass="health-grid">
+            @foreach (var item in FilteredHealthItems)
+            {
+                <article class="health-card @item.Status.ToLower()">
+                    <div>
+                        <StatusBadge Text="@item.Status" CssClass="health-status" />
+                        <h2>@item.ServiceName</h2>
+                        <p>@item.Detail</p>
+                    </div>
+
+                    <div class="health-meta">
+                        <strong>@item.LatencyMs ms</strong>
+                        <small>@item.CheckedAtUtc.ToString("dd MMM yyyy HH:mm") UTC</small>
+                    </div>
+                </article>
+            }
+        </ModuleShell>
+    }
 }
 
 @code {
@@ -75,6 +84,7 @@ else
     };
 
     private string SelectedStatus { get; set; } = "All";
+    private bool IsLoading { get; set; } = true;
 
     private IEnumerable<SystemHealthItem> FilteredHealthItems =>
         SelectedStatus == "All"
@@ -82,9 +92,12 @@ else
             : HealthItems.Where(item =>
                 item.Status.Equals(SelectedStatus, StringComparison.OrdinalIgnoreCase));
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        await Task.Delay(700);
+
         HealthItems = DashboardService.GetSystemHealth();
+        IsLoading = false;
     }
 
     private void SelectStatus(string status)
