@@ -2,39 +2,42 @@
 @rendermode InteractiveServer
 @using FincoreBlazorClient.Models
 @using FincoreBlazorClient.Services
+@using FincoreBlazorClient.Components.Shared
 @inject AuthSessionService AuthSessionService
 @inject NavigationManager NavigationManager
 
 <PageTitle>Sesión</PageTitle>
 
-<section class="page-heading">
-    <span class="eyebrow dark">Seguridad</span>
-    <h1>Sesión simulada</h1>
-    <p>Estado visual de autenticación usando un service scoped en Blazor.</p>
-</section>
+<PageHeader
+    Eyebrow="Seguridad"
+    Title="Sesión simulada"
+    Description="Estado visual de autenticación usando un service en Blazor." />
 
 @if (!SessionState.IsAuthenticated)
 {
     <section class="session-card">
-        <span class="session-badge danger">No autenticado</span>
+        <StatusBadge Text="No autenticado" CssClass="session-badge danger" />
+
         <h2>No hay sesión activa</h2>
         <p>Inicia sesión para simular acceso al portal bancario.</p>
 
-        <button type="button" class="primary-button" @onclick="GoToLogin">
-            Ir al login
-        </button>
+        <ActionButton
+            Text="Ir al login"
+            OnClick="GoToLogin" />
     </section>
 }
 else
 {
     <section class="session-card">
-        <span class="session-badge success">Autenticado</span>
+        <StatusBadge Text="Autenticado" CssClass="session-badge success" />
+
         <h2>@SessionState.Email</h2>
         <p>Sesión iniciada el @SessionState.LoggedAtUtc?.ToString("dd MMM yyyy HH:mm") UTC</p>
 
-        <button type="button" class="secondary-danger-button" @onclick="HandleLogout">
-            Cerrar sesión
-        </button>
+        <ActionButton
+            Text="Cerrar sesión"
+            CssClass="secondary-danger-button"
+            OnClick="HandleLogout" />
     </section>
 }
 

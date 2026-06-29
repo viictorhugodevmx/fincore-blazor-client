@@ -3,6 +3,7 @@
 @using Microsoft.AspNetCore.Components.Forms
 @using FincoreBlazorClient.Models
 @using FincoreBlazorClient.Services
+@using FincoreBlazorClient.Components.Shared
 @inject NavigationManager NavigationManager
 @inject AuthSessionService AuthSessionService
 
@@ -42,9 +43,10 @@
                 <ValidationMessage For="@(() => LoginData.Password)" />
             </div>
 
-            <button type="submit" class="primary-button">
-                Entrar
-            </button>
+            <ActionButton
+                Text="Entrar"
+                Type="submit"
+                CssClass="primary-button" />
         </EditForm>
 
         <div class="login-help">

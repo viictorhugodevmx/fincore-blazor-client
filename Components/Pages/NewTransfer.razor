@@ -70,9 +70,10 @@
             <ValidationMessage For="@(() => Transfer.Description)" />
         </div>
 
-        <button type="submit" class="primary-button">
-            Registrar transferencia
-        </button>
+        <ActionButton
+            Text="Registrar transferencia"
+            Type="submit"
+            CssClass="primary-button" />
     </EditForm>
 </section>
 
